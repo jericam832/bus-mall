@@ -10,7 +10,7 @@ var third = document.getElementById('right');
 var containerElement = document.getElementById('image_container');
 var resultElement = document.getElementById('tally');
 var allProducts = [];
-var renderCounter = 25;
+var renderCounter = 5;
 
 function Product(name) {
   this.name = name;
@@ -18,8 +18,9 @@ function Product(name) {
   this.views = 0;
   this.votes = 0;
   allProducts.push(this);
+  // this.renderProducts();
+  // this.makeRandom();
 }
-
 function makeRandom() {
   return Math.floor(Math.random() * allProducts.length);
 }
@@ -31,8 +32,10 @@ function renderProducts() {
   uniquePicsArray[1] = makeRandom();
   uniquePicsArray[2] = makeRandom();
   //assign values to indexes and check for duplicates
-  if (uniquePicsArray[0] === uniquePicsArray[1] || uniquePicsArray[0] === uniquePicsArray[2] || uniquePicsArray[1] === uniquePicsArray[2]) {
+  if (uniquePicsArray[0] === uniquePicsArray[1] || uniquePicsArray[0] === uniquePicsArray[2]) {
     console.error('Duplicate found, Re-rolling!');
+    uniquePicsArray[0] = makeRandom();
+  } else if (uniquePicsArray[1] === uniquePicsArray[2]){
     uniquePicsArray[1] = makeRandom();
   }
   //add views here
@@ -71,6 +74,16 @@ new Product('bubblegum');
 new Product('chair');
 new Product('cthulhu');
 new Product('dog-duck');
+new Product('dragon');
+new Product('pen');
+new Product('pet-sweep');
+new Product('scissors');
+new Product('shark');
+new Product('tauntaun');
+new Product('unicorn');
+new Product('usb');
+new Product('water-can');
+new Product('wine-glass');
 
 function handleClick() {
   var chosenImage = event.target.title;
@@ -88,14 +101,6 @@ function handleClick() {
     containerElement.removeEventListener('click', handleClick);
   }
 }
-
-
 containerElement.addEventListener('click', handleClick);
-
-
-// for (var i = 0; i < allProducts.length; i++) {
-//   Product[i].renderProducts();
-// }
 //Run render last
-
 renderProducts();

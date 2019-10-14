@@ -1,21 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Kalam|Questrial&display=swap');
+
+body{
+  height: 90vh;
+  margin: 0px;
+  font-family: 'Questrial', sans-serif;
+}
+header {
+  background-color: dodgerblue;
+  color: white;
+  height: 100px;
+  position: relative;
+  
+}
+#title {
+  padding-bottom: 40px;
+  padding-left: 25px;
+}
+#image_container {
+  margin: 0 auto;
+}
 img {
-  width: 15%;
+  width: 31.4%;
   display: inline-block;
+  padding: 5px;
 }
 #left-column {
   width: 20%;
   float: left;
   border: 1px solid black;
+  border-radius: 5px;
   padding: 10px;
+  margin: 20px;
+  background-color: dodgerblue;
+  color: white;
+  height: 90vh;
+}
+#left-column > h2 {
+  font-family: 'Questrial', sans-serif;
+  text-align: center;
+  
 }
 #right-column {
+  margin: 15px;
   float: right;
-  background-color: whitesmoke;
   padding: 20px;
-  width: 80%;
-  border: 1px solid black;
+  width: 72%;
   padding: 10px;
 }
 p {
-  width: 80%;
+  font-size: 1.2em;
+  border: 1px solid black;
+  padding: 15px;
+} 
+
+footer {
+  background-color: dodgerblue;
+  color: white;
+  clear: both;
+  left: 0;
+  bottom: 0;
+  position: relative;
+  margin-top: 110px;
+  text-align: center;
+  padding: 30px;
 }
