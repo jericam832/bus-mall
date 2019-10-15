@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css?family=Kalam|Questrial&display=swap');
+
+body{
+  height: 100vh;
+  margin: 0px;
+  font-family: 'Questrial', sans-serif;
+}
+header {
+  background-color: #0984e3;
+  color: white;
+  height: 100px;
+  position: relative;
+  
+}
+#title {
+  font-family: 'Kalam', cursive;
+  padding-bottom: 40px;
+  padding-left: 25px;
+}
+main{
+  margin-top: 50px;
+}
+#image_container {
+  margin: 0 auto;
+}
+img {
+  width: 31.4%;
+  display: inline-block;
+  padding: 5px;
+}
+#left-column {
+  width: 20%;
+  float: left;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 20px;
+  background-color: #b2bec3;
+  color: white;
+  height: 80vh;
+}
+#left-column > h2 {
+  font-family: 'Kalam', cursive;
+  text-align: center;
+  
+}
+#list-item {
+  text-transform: capitalize;
+}
+#reset {
+  padding: 15px;
+  margin: 0 auto;
+  display: block;
+  border-radius: 4px;
+  border: none;
+  color: dodgerblue;
+  text-transform: uppercase;
+}
+#right-column {
+  margin: 15px;
+  float: right;
+  padding: 20px;
+  width: 72%;
+  padding: 10px;
+}
+p {
+  font-size: 1.2em;
+  border-radius: 4px;
+  padding: 15px;
+  text-indent: 2%;;
+  /* background-color: #636e72;
+  color: white; */
+} 
+
+footer {
+  background-color: #0984e3;
+  color: white;
+  clear: both;
+  left: 0;
+  bottom: 0;
+  position: relative;
+  margin-top: 110px;
+  text-align: center;
+  padding: 30px;
+}
