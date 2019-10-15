@@ -10,7 +10,7 @@ var third = document.getElementById('right');
 var containerElement = document.getElementById('image_container');
 var resultElement = document.getElementById('tally');
 var allProducts = [];
-var renderCounter = 5;
+var renderCounter = 24;
 
 function Product(name) {
   this.name = name;
@@ -37,6 +37,8 @@ function renderProducts() {
     uniquePicsArray[0] = makeRandom();
   } else if (uniquePicsArray[1] === uniquePicsArray[2]){
     uniquePicsArray[1] = makeRandom();
+  } else if (uniquePicsArray[0] === uniquePicsArray[2]) {
+    uniquePicsArray[2] = makeRandom();
   }
   //add views here
   allProducts[uniquePicsArray[0]].views++;
@@ -60,11 +62,13 @@ function renderProducts() {
 function resultFunction() {
   for (var i = 0; i < allProducts.length; i++) {
     var votes = document.createElement('li');
+    votes.setAttribute('id', 'list-item');
     votes.textContent = `${allProducts[i].name} had ${allProducts[i].votes} votes and ${allProducts[i].views}!`;
     resultElement.appendChild(votes);
   }
 
 }
+
 new Product('bag');
 new Product('banana');
 new Product('bathroom');
@@ -102,5 +106,10 @@ function handleClick() {
   }
 }
 containerElement.addEventListener('click', handleClick);
+var refresh = document.getElementById('reset');
+function resetSurvey(){
+  window.location.reload();
+}
+refresh.addEventListener('click', resetSurvey);
 //Run render last
 renderProducts();
