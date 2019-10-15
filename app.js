@@ -64,9 +64,7 @@ function resultFunction() {
     votes.textContent = `${allProducts[i].name} had ${allProducts[i].votes} votes and ${allProducts[i].views} views.`;
     resultElement.appendChild(votes);
   }
-
 }
-
 new Product('bag');
 new Product('banana');
 new Product('bathroom');

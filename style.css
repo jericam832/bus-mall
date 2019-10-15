@@ -4,16 +4,17 @@ body{
   height: 100vh;
   margin: 0px;
   font-family: 'Questrial', sans-serif;
+  background: url('img/memphis-mini.png');
 }
 header {
   background-color: #0984e3;
   color: white;
-  height: 100px;
+  height: 120px;
   position: relative;
-  
 }
 #title {
   font-family: 'Kalam', cursive;
+  text-align: center;
   padding-bottom: 40px;
   padding-left: 25px;
 }
@@ -84,4 +85,8 @@ footer {
   margin-top: 110px;
   text-align: center;
   padding: 30px;
+}
+a{
+  color: white;
+  text-decoration: none;
 }
