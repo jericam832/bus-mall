@@ -5,16 +5,14 @@
 // 4. add event listener for when an image is clicked
 // 5. acp after each step
 // 6. add 
-Product.names = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dragon.jpg', 'dog-duck', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.jpg', 'tauntaun.jpg', 'unicorn.jpg', 'usb.jpg', 'water-can.jpg', 'wine-glass.jpg'];
-// var first = document.getElementById('left');
-// var second = document.getElementById('center');
-// var third = document.getElementById('right');
+//put names into an array
+Product.names = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dragon.jpg', 'dog-duck.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.jpg', 'tauntaun.jpg', 'unicorn.jpg', 'usb.jpg', 'water-can.jpg', 'wine-glass.jpg'];
 Product.h1El = document.getElementById('instructions');
 Product.containerElement = document.getElementById('image_container');
-Product.resultElement = document.getElementById('tally');
+// Product.resultElement = document.getElementById('tally');
 Product.allProducts = [];
 Product.uniquePicsArray = [];
-Product.renderCounter = 9;
+Product.renderCounter = 24;
 Product.pics = [
   document.getElementById('left'),
   document.getElementById('center'),
@@ -58,37 +56,6 @@ Product.prototype.renderProducts = function() {
   }
 }
 
-Product.prototype.resultFunction = function() {
-  for (var i = 0; i < Product.allProducts.length; i++) {
-    Product.votes = document.createElement('li');
-    Product.votes.setAttribute('id', 'list-item');
-    Product.votes.textContent = `${Product.allProducts[i].name} had ${Product.allProducts[i].votes} votes and ${Product.allProducts[i].views} views.`;
-    Product.resultElement.appendChild(Product.votes);
-  }
-}
-
-//put names into an array
-// new Product('bag');
-// new Product('banana');
-// new Product('bathroom');
-// new Product('boots');
-// new Product('breakfast');
-// new Product('bubblegum');
-// new Product('chair');
-// new Product('cthulhu');
-// new Product('dog-duck');
-// new Product('dragon');
-// new Product('pen');
-// new Product('pet-sweep');
-// new Product('scissors');
-// new Product('shark');
-// new Product('tauntaun');
-// new Product('unicorn');
-// new Product('usb');
-// new Product('water-can');
-// new Product('wine-glass');
-
-
 Product.prototype.handleClick = function(event) {
   Product.chosenImage = event.target.title;
   // console.log('chosenImage: ', chosenImage);
@@ -102,51 +69,101 @@ Product.prototype.handleClick = function(event) {
   console.log(Product.renderCounter);
   if (Product.renderCounter === 0) {
     Product.h1El.innerHTML = 'Survey Results';
-    Product.prototype.resultFunction();
     Product.containerElement.removeEventListener('click', Product.prototype.handleClick);
     Product.containerElement.style.display = 'none';
-
+    // Product.getChart.style.visibility = 'visible';
+    Product.prototype.makeChart();
   }
-//call chart function
-  // makeChart();
+  //call chart function
+ 
+
+}
+Product.prototype.makeChart = function() {
+  Product.prototype.getChartData();
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var canvas = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: Product.namesData,
+      datasets: [{
+        label: '# of Votes',
+        data: Product.votesData,
+        backgroundColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+
+
 }
 Product.containerElement.addEventListener('click', Product.prototype.handleClick);
-// Product.namesData = [];
-// Product.votesData = [];
-// Product.viewsData = [];
-// //push all data into separate arrays
-// var getChartData = function() {
-//   for(var i = 0; i < Product.allProducts.length; i++) {
-//     Product.namesData.push(Product.allProducts[i].name);
-//     Product.votesData.push(Product.allProducts[i].votes);
-//     Product.viewsData.push(Product.allProducts[i].views);
-//   }
-// };
-// debugger;
-// Product.data = {
-//   labels: Product.namesData,
-//   datasets: [
-//     {
-//       fullColor: 'rgba(220,220,220, 0.80)',
-//       strokeColor: 'rgba(220,220,220,1)',
-//       data: Product.votesData
-//     }
+Product.namesData = [];
+Product.votesData = [];
+Product.viewsData = [];
 
-//   ]
-// }
-// //make chart function
-// function makeChart() {
-//   getChartData();
-//   Product.getChart = document.getElementById('myChart').getContext('2d');
-//  var canvas = new getChartData(Product.getChart).Bar(Product.data);
-// }
+//push all data into separate arrays
+Product.prototype.getChartData = function() {
+  for(var i = 0; i < Product.allProducts.length; i++) {
+    Product.namesData.push(Product.allProducts[i].name);
+    Product.votesData.push(Product.allProducts[i].votes);
+    Product.viewsData.push(Product.allProducts[i].views);
+  }
+};
+// debugger;
+Product.data = {
+  labels: Product.namesData,
+  datasets: [
+    {
+      fullColor: 'rgba(220,220,220, 0.80)',
+      strokeColor: 'rgba(220,220,220,1)',
+      data: Product.votesData
+    }
+
+  ]
+}
+
+
+
+
+//make chart function
+// var chart = new Chart(Product.makeChart, {
+//   type: 'bar',
+//   data: Product.data,
+//   options: {
+//     event: ['click']
+//   }
+// });
 
 //refresh screen and start over
-var refresh = document.getElementById('reset');
-refresh.addEventListener('click', resetSurvey);
-function resetSurvey(){
-  window.location.reload();
-}
+// var refresh = document.getElementById('reset');
+// refresh.addEventListener('click', resetSurvey);
+// function resetSurvey(){
+//   window.location.reload();
+// }
 
 //Run render last
 Product.prototype.renderProducts();

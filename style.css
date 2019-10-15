@@ -64,9 +64,9 @@ img {
 }
 #right-column {
   margin: 15px;
-  float: right;
+  /* float: right; */
   padding: 20px;
-  width: 71%;
+  /* width: 71%; */
   padding: 10px;
 }
 
