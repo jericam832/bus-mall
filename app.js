@@ -1,39 +1,36 @@
 'use strict';
-// 1. Point to HTML ids
-// 2. create a constructor function for the Product list
-// 3. make a random number generator (copy from salmon cookies)
-// 4. add event listener for when an image is clicked
-// 5. acp after each step
-// 6. add 
-Product.names = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dragon.jpg', 'dog-duck', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.jpg', 'tauntaun.jpg', 'unicorn.jpg', 'usb.jpg', 'water-can.jpg', 'wine-glass.jpg'];
-// var first = document.getElementById('left');
-// var second = document.getElementById('center');
-// var third = document.getElementById('right');
+//put names into an array
+Product.names = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dragon', 'dog-duck', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
 Product.h1El = document.getElementById('instructions');
 Product.containerElement = document.getElementById('image_container');
-Product.resultElement = document.getElementById('tally');
 Product.allProducts = [];
 Product.uniquePicsArray = [];
-Product.renderCounter = 9;
+Product.renderCounter = 24;
 Product.pics = [
   document.getElementById('left'),
   document.getElementById('center'),
   document.getElementById('right')
 ];
-
+Product.showClicks = document.getElementById('click_counter');
+Product.ctx = document.getElementById('myChart');
+Product.ctx.style.display = 'none';
 function Product(name) {
   this.name = name;
-  this.path = `img/${name}`;
+  this.path = `img/${name}.jpg`;
   this.views = 0;
   this.votes = 0;
-  allProducts.push(this);
+  Product.allProducts.push(this);
 }
-function makeRandom() {
-  return Math.floor(Math.random() * allProducts.length);
+for (var i = 0; i < Product.names.length; i++) {
+  new Product(Product.names[i]);
 }
-function uniquePicsArrayGenerator() {
+
+Product.prototype.makeRandom = function() {
+  return Math.floor(Math.random() * Product.allProducts.length);
+}
+Product.prototype.uniquePicsArrayGenerator = function() {
   while(Product.uniquePicsArray.length < 6) {
-    var random = makeRandom();
+    var random = Product.prototype.makeRandom();
     while(!Product.uniquePicsArray.includes(random)) {
       // console.log('building uniquqPicsArray', uniquePicsArray);
       Product.uniquePicsArray.push(random);
@@ -41,76 +38,105 @@ function uniquePicsArrayGenerator() {
   }
 }
 
-function renderProducts() {
+Product.prototype.renderProducts = function() {
   //create an array to hold unique indexes
-  uniquePicsArrayGenerator();
+  Product.prototype.uniquePicsArrayGenerator();
   for(var i = 0; i < 3; i++) {
     var temp = Product.uniquePicsArray.shift();
     // console.log('Temp is #', temp);
     Product.pics[i].src = Product.allProducts[temp].path;
     Product.pics[i].name = Product.allProducts[temp].name;
-    pics[i].title = allProducts[temp].name;
+    Product.pics[i].title = Product.allProducts[temp].name;
     Product.allProducts[temp].views++;
   }
 }
 
-function resultFunction() {
-  for (var i = 0; i < Product.allProducts.length; i++) {
-    var votes = document.createElement('li');
-    votes.setAttribute('id', 'list-item');
-    votes.textContent = `${Product.allProducts[i].name} had ${Product.allProducts[i].votes} votes and ${Product.allProducts[i].views} views.`;
-    Product.resultElement.appendChild(votes);
-  }
-}
-
-//put names into an array
-// new Product('bag');
-// new Product('banana');
-// new Product('bathroom');
-// new Product('boots');
-// new Product('breakfast');
-// new Product('bubblegum');
-// new Product('chair');
-// new Product('cthulhu');
-// new Product('dog-duck');
-// new Product('dragon');
-// new Product('pen');
-// new Product('pet-sweep');
-// new Product('scissors');
-// new Product('shark');
-// new Product('tauntaun');
-// new Product('unicorn');
-// new Product('usb');
-// new Product('water-can');
-// new Product('wine-glass');
-
-containerElement.addEventListener('click', handleClick);
-function handleClick() {
-  var chosenImage = event.target.title;
+Product.prototype.handleClick = function(event) {
+  Product.chosenImage = event.target.title;
   // console.log('chosenImage: ', chosenImage);
   for (var i = 0; i < Product.allProducts.length; i++) {
-    if (Product.allProducts[i].name === chosenImage) {
+    if (Product.allProducts[i].name === Product.chosenImage) {
       Product.allProducts[i].votes++;
       Product.renderCounter--;
+      Product.showClicks.innerHTML = `${Product.renderCounter} choices remaining`;
     }
   }
-  renderProducts();
-  console.log(renderCounter);
+  Product.prototype.renderProducts();
+  console.log(Product.renderCounter);
   if (Product.renderCounter === 0) {
-    h1El.innerHTML = 'Survey Results';
-    resultFunction();
-    containerElement.removeEventListener('click', handleClick);
-    containerElement.style.display = 'none';
-
+    Product.h1El.innerHTML = 'Survey Results';
+    Product.containerElement.removeEventListener('click', Product.prototype.handleClick);
+    Product.containerElement.style.display = 'none';
+    // Product.getChart.style.visibility = 'visible';
+    //call chart function
+    Product.prototype.makeChart();
   }
-//call chart function
-  getChartData();
 }
+Product.prototype.makeChart = function() {
+  Product.prototype.getChartData();
+  Product.ctx.style.display = 'block';
+  Product.ctx.getContext('2d');
+  var canvas = new Chart(Product.ctx, {
+    type: 'bar',
+    data: {
+      labels: Product.namesData,
+      datasets: [{
+        label: 'Customer Survey Results',
+        data: Product.votesData,
+        backgroundColor: [
+          // 'rgba(255, 99, 132, 1)',
+          'rgba(66, 133, 244 , 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)'
+        ],
+        borderColor: [
+          'rgba(280, 39, 95, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+
+
+}
+Product.containerElement.addEventListener('click', Product.prototype.handleClick);
+
 Product.namesData = [];
 Product.votesData = [];
 Product.viewsData = [];
+
 //push all data into separate arrays
-var getChartData = function() {
+Product.prototype.getChartData = function() {
   for(var i = 0; i < Product.allProducts.length; i++) {
     Product.namesData.push(Product.allProducts[i].name);
     Product.votesData.push(Product.allProducts[i].votes);
@@ -118,27 +144,6 @@ var getChartData = function() {
   }
 };
 
-Product.data = {
-  labels: Product.namesData,
-  datasets: [
-    {
-      fullColor: 'rgba(220,220,220, 0.80)',
-      strokeColor: 'rgba(220,220,220,1)',
-      data: Product.viewsData
-    },
-
-  ]
-}
-//make chart function
-// function makeChart() {
-
-// }
-//refresh screen and start over
-var refresh = document.getElementById('reset');
-refresh.addEventListener('click', resetSurvey);
-function resetSurvey(){
-  window.location.reload();
-}
 
 //Run render last
-renderProducts();
+Product.prototype.renderProducts();

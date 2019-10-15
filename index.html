@@ -12,19 +12,13 @@
   </head>
   <body>
     <header>
-      <img src="" alt=""> <h1 id="title"><i class="fas fa-shopping-basket"></i> BusMall Online Magazine</h1>
+      <img src="" alt=""> <h1 id="title">
+        <i class="fas fa-shopping-basket"></i> BusMall Online Magazine</h1>
     </header>
     <main>
-      <canvas id="myChart" width="700" height="200"></canvas>
-<!-- remove left column but keep button -->
-      <div id="left-column">
-        <h2>Results</h2>
-        <ul id="tally">
-        </ul>
-        <button id="reset">Start Over</button>
-      </div>
-      <div id="right-column">
-        <h1 id="instructions">Choose a Product.</h1>
+      <sub id="click_counter"></sub>
+      <h1 id="instructions">Please Choose a Product</h1>
+      <canvas id="myChart" width="500" height="200"></canvas>
         <section id="image_container">
           <img id="left" src="" alt="">
           <img id="center" src="" alt="">
@@ -36,49 +30,6 @@
         canes. Apple pie I love toffee. Croissant oat cake soufflé wafer jelly. Candy canes pie marshmallow donut I love icing
         chocolate bar muffin. Chocolate bar jelly-o jelly-o lollipop toffee I love I love gummies. Bonbon liquorice pie danish
         cake powder. Candy canes gingerbread I love.</p>
-      </div>
-      <!-- Hide everything after last click and display chart -->
-      <!-- 
-        <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-          type: 'pie',
-          data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-              ],
-              borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-              ],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true
-                }
-              }]
-            }
-          }
-        });
-      </script>
-       -->
     </main>
     
     <footer>
