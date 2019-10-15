@@ -26,14 +26,18 @@ function Product(name) {
   this.path = `img/${name}`;
   this.views = 0;
   this.votes = 0;
-  allProducts.push(this);
+  Product.allProducts.push(this);
 }
-function makeRandom() {
-  return Math.floor(Math.random() * allProducts.length);
+for (var i = 0; i < Product.names.length; i++) {
+  new Product(Product.names[i]);
 }
-function uniquePicsArrayGenerator() {
+
+Product.prototype.makeRandom = function() {
+  return Math.floor(Math.random() * Product.allProducts.length);
+}
+Product.prototype.uniquePicsArrayGenerator = function() {
   while(Product.uniquePicsArray.length < 6) {
-    var random = makeRandom();
+    var random = Product.prototype.makeRandom();
     while(!Product.uniquePicsArray.includes(random)) {
       // console.log('building uniquqPicsArray', uniquePicsArray);
       Product.uniquePicsArray.push(random);
@@ -41,25 +45,25 @@ function uniquePicsArrayGenerator() {
   }
 }
 
-function renderProducts() {
+Product.prototype.renderProducts = function() {
   //create an array to hold unique indexes
-  uniquePicsArrayGenerator();
+  Product.prototype.uniquePicsArrayGenerator();
   for(var i = 0; i < 3; i++) {
     var temp = Product.uniquePicsArray.shift();
     // console.log('Temp is #', temp);
     Product.pics[i].src = Product.allProducts[temp].path;
     Product.pics[i].name = Product.allProducts[temp].name;
-    pics[i].title = allProducts[temp].name;
+    Product.pics[i].title = Product.allProducts[temp].name;
     Product.allProducts[temp].views++;
   }
 }
 
-function resultFunction() {
+Product.prototype.resultFunction = function() {
   for (var i = 0; i < Product.allProducts.length; i++) {
-    var votes = document.createElement('li');
-    votes.setAttribute('id', 'list-item');
-    votes.textContent = `${Product.allProducts[i].name} had ${Product.allProducts[i].votes} votes and ${Product.allProducts[i].views} views.`;
-    Product.resultElement.appendChild(votes);
+    Product.votes = document.createElement('li');
+    Product.votes.setAttribute('id', 'list-item');
+    Product.votes.textContent = `${Product.allProducts[i].name} had ${Product.allProducts[i].votes} votes and ${Product.allProducts[i].views} views.`;
+    Product.resultElement.appendChild(Product.votes);
   }
 }
 
@@ -84,55 +88,59 @@ function resultFunction() {
 // new Product('water-can');
 // new Product('wine-glass');
 
-containerElement.addEventListener('click', handleClick);
-function handleClick() {
-  var chosenImage = event.target.title;
+
+Product.prototype.handleClick = function(event) {
+  Product.chosenImage = event.target.title;
   // console.log('chosenImage: ', chosenImage);
   for (var i = 0; i < Product.allProducts.length; i++) {
-    if (Product.allProducts[i].name === chosenImage) {
+    if (Product.allProducts[i].name === Product.chosenImage) {
       Product.allProducts[i].votes++;
       Product.renderCounter--;
     }
   }
-  renderProducts();
-  console.log(renderCounter);
+  Product.prototype.renderProducts();
+  console.log(Product.renderCounter);
   if (Product.renderCounter === 0) {
-    h1El.innerHTML = 'Survey Results';
-    resultFunction();
-    containerElement.removeEventListener('click', handleClick);
-    containerElement.style.display = 'none';
+    Product.h1El.innerHTML = 'Survey Results';
+    Product.prototype.resultFunction();
+    Product.containerElement.removeEventListener('click', Product.prototype.handleClick);
+    Product.containerElement.style.display = 'none';
 
   }
 //call chart function
-  getChartData();
+  // makeChart();
 }
-Product.namesData = [];
-Product.votesData = [];
-Product.viewsData = [];
-//push all data into separate arrays
-var getChartData = function() {
-  for(var i = 0; i < Product.allProducts.length; i++) {
-    Product.namesData.push(Product.allProducts[i].name);
-    Product.votesData.push(Product.allProducts[i].votes);
-    Product.viewsData.push(Product.allProducts[i].views);
-  }
-};
+Product.containerElement.addEventListener('click', Product.prototype.handleClick);
+// Product.namesData = [];
+// Product.votesData = [];
+// Product.viewsData = [];
+// //push all data into separate arrays
+// var getChartData = function() {
+//   for(var i = 0; i < Product.allProducts.length; i++) {
+//     Product.namesData.push(Product.allProducts[i].name);
+//     Product.votesData.push(Product.allProducts[i].votes);
+//     Product.viewsData.push(Product.allProducts[i].views);
+//   }
+// };
+// debugger;
+// Product.data = {
+//   labels: Product.namesData,
+//   datasets: [
+//     {
+//       fullColor: 'rgba(220,220,220, 0.80)',
+//       strokeColor: 'rgba(220,220,220,1)',
+//       data: Product.votesData
+//     }
 
-Product.data = {
-  labels: Product.namesData,
-  datasets: [
-    {
-      fullColor: 'rgba(220,220,220, 0.80)',
-      strokeColor: 'rgba(220,220,220,1)',
-      data: Product.viewsData
-    },
-
-  ]
-}
-//make chart function
-// function makeChart() {
-
+//   ]
 // }
+// //make chart function
+// function makeChart() {
+//   getChartData();
+//   Product.getChart = document.getElementById('myChart').getContext('2d');
+//  var canvas = new getChartData(Product.getChart).Bar(Product.data);
+// }
+
 //refresh screen and start over
 var refresh = document.getElementById('reset');
 refresh.addEventListener('click', resetSurvey);
@@ -141,4 +149,4 @@ function resetSurvey(){
 }
 
 //Run render last
-renderProducts();
+Product.prototype.renderProducts();
