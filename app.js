@@ -18,8 +18,6 @@ function Product(name) {
   this.views = 0;
   this.votes = 0;
   allProducts.push(this);
-  // this.renderProducts();
-  // this.makeRandom();
 }
 function makeRandom() {
   return Math.floor(Math.random() * allProducts.length);
@@ -32,7 +30,7 @@ function renderProducts() {
   uniquePicsArray[1] = makeRandom();
   uniquePicsArray[2] = makeRandom();
   //assign values to indexes and check for duplicates
-  if (uniquePicsArray[0] === uniquePicsArray[1] || uniquePicsArray[0] === uniquePicsArray[2]) {
+  if (uniquePicsArray[0] === uniquePicsArray[1]) {
     console.error('Duplicate found, Re-rolling!');
     uniquePicsArray[0] = makeRandom();
   } else if (uniquePicsArray[1] === uniquePicsArray[2]){
@@ -63,7 +61,7 @@ function resultFunction() {
   for (var i = 0; i < allProducts.length; i++) {
     var votes = document.createElement('li');
     votes.setAttribute('id', 'list-item');
-    votes.textContent = `${allProducts[i].name} had ${allProducts[i].votes} votes and ${allProducts[i].views}!`;
+    votes.textContent = `${allProducts[i].name} had ${allProducts[i].votes} votes and ${allProducts[i].views} views.`;
     resultElement.appendChild(votes);
   }
 
