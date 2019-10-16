@@ -7,18 +7,25 @@ body{
   background: url('img/memphis-mini.png');
 }
 header {
+  top: 0;
+  left: 0;
   background-color: #0984e3;
   color: white;
-  height: 120px;
   position: relative;
+}
+header p {
+  text-align: center;
+  color: white;
+  font-size: 1em;
+  margin-top: 0px;
+  padding-top: 0px;
 }
 #title {
   font-family: 'Kalam', cursive;
-  /* background-color: white; */
   color: white;
   text-align: center;
-  padding-bottom: 40px;
-  padding-left: 25px;
+  margin: 0 auto;
+  padding-top: 30px;
 }
 main {
   margin: 50px auto;
@@ -28,69 +35,53 @@ main {
   border-radius: 6px;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
-#image_container {
-  margin: 0 75px;
-}
 img {
-  width: 30%;
+  width: 31.2%;
   display: inline-block;
-  padding: 10px;
+  padding: 3px;
   align-content: center;
   background-color: #0984e3;
   border-radius: 6px;
-}
-/* #left-column {
-  width: 21%;
-  float: left;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 20px;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  margin: 5px;
+}
 
-  background-color: #b2bec3;
-  color: white;
-  height: 80vh;
-} */
 main h1{
   text-align: center;
-  
+  color: #555;
 }
 #click_counter {
   float: right;
 }
 canvas {
   background-color: white;
-
 }
 #list-item {
   text-transform: capitalize;
 }
 #reset {
-  padding: 15px;
-  margin: 0 auto;
+  float: left;
+  padding: 10px;
+  /* margin: 5px 10px; */
   display: block;
   border-radius: 4px;
   border: none;
-  background-color: #0984e3;
+  background-color: #de2924;
   color: white;
   text-transform: uppercase;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 
 }
-#right-column {
-  margin: 15px;
-  padding: 20px;
-  padding: 10px;
-}
 
-#right-column h1 {
+main h1 {
   text-align: center;
+  font-family: 'Kalam', cursive;
 }
 p {
-  font-size: 1.2em;
+  font-size: 1.1em;
   border-radius: 4px;
   padding: 15px;
-  text-indent: 2%;
+  text-indent: 5%;
   color: #555;
 } 
 
