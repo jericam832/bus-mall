@@ -27,7 +27,7 @@ function Product(name) {
 for (var i = 0; i < Product.names.length; i++) {
   new Product(Product.names[i]);
 }
-
+// console.log(Product.allProducts);
 //random number prototype
 Product.prototype.makeRandom = function() {
   return Math.floor(Math.random() * Product.allProducts.length);
@@ -60,7 +60,7 @@ Product.prototype.renderProducts = function() {
 Product.prototype.refreshSurvey = function() {
   window.location.reload();
 }
-
+// -----------------------------------------------------------------------
 Product.prototype.handleClick = function(event) {
   Product.chosenImage = event.target.title;
   // console.log('chosenImage: ', chosenImage);
@@ -81,10 +81,29 @@ Product.prototype.handleClick = function(event) {
     //call chart function
     Product.prototype.makeChart();
   }
-}
-Product.prototype.chooseChartType = function() {
 
 }
+//----------------------- local storage -----------------------------------
+Product.productsStringified = JSON.stringify(Product.allProducts);
+// console.log(Product.productsStringified);
+localStorage.setItem('productData', Product.productsStringified);
+
+Product.storedProducts = localStorage.getItem('productData');
+
+// console.log(Product.storedProducts);
+
+Product.parsedProducts = JSON.parse(Product.storedProducts);
+
+console.log(Product.parsedProducts);
+for (var i = 0; i < Product.parsedProducts.length; i++) {
+  new Product(Product.parsedProducts[i].name);
+}
+
+console.log(Product.allProducts);
+//-----------------------------------------------------------------------
+// Product.prototype.chooseChartType = function() {
+
+// }
 //make chart 
 Product.prototype.makeChart = function() {
   Product.prototype.getChartData();
