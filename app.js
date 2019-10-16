@@ -3,9 +3,10 @@
 Product.names = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dragon', 'dog-duck', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
 Product.h1El = document.getElementById('instructions');
 Product.containerElement = document.getElementById('image_container');
+Product.resetButton = document.getElementById('reset');
 Product.allProducts = [];
 Product.uniquePicsArray = [];
-Product.renderCounter = 24;
+Product.renderCounter = 25;
 Product.pics = [
   document.getElementById('left'),
   document.getElementById('center'),
@@ -13,7 +14,8 @@ Product.pics = [
 ];
 Product.showClicks = document.getElementById('click_counter');
 Product.ctx = document.getElementById('myChart');
-Product.ctx.style.display = 'none';
+Product.ctx.style.display = 'none'; //hide chart
+//constructor function
 function Product(name) {
   this.name = name;
   this.path = `img/${name}.jpg`;
@@ -28,6 +30,7 @@ for (var i = 0; i < Product.names.length; i++) {
 Product.prototype.makeRandom = function() {
   return Math.floor(Math.random() * Product.allProducts.length);
 }
+
 Product.prototype.uniquePicsArrayGenerator = function() {
   while(Product.uniquePicsArray.length < 6) {
     var random = Product.prototype.makeRandom();
@@ -50,6 +53,10 @@ Product.prototype.renderProducts = function() {
     Product.allProducts[temp].views++;
   }
 }
+//Button refreshes page
+Product.prototype.refreshSurvey = function() {
+  window.location.reload();
+}
 
 Product.prototype.handleClick = function(event) {
   Product.chosenImage = event.target.title;
@@ -58,20 +65,21 @@ Product.prototype.handleClick = function(event) {
     if (Product.allProducts[i].name === Product.chosenImage) {
       Product.allProducts[i].votes++;
       Product.renderCounter--;
-      Product.showClicks.innerHTML = `${Product.renderCounter} choices remaining`;
     }
+    Product.showClicks.innerHTML = `${Product.renderCounter} choices remaining`;
   }
+
   Product.prototype.renderProducts();
-  console.log(Product.renderCounter);
+    // console.log(Product.renderCounter);
   if (Product.renderCounter === 0) {
     Product.h1El.innerHTML = 'Survey Results';
     Product.containerElement.removeEventListener('click', Product.prototype.handleClick);
     Product.containerElement.style.display = 'none';
-    // Product.getChart.style.visibility = 'visible';
     //call chart function
     Product.prototype.makeChart();
   }
 }
+//make chart 
 Product.prototype.makeChart = function() {
   Product.prototype.getChartData();
   Product.ctx.style.display = 'block';
@@ -81,10 +89,9 @@ Product.prototype.makeChart = function() {
     data: {
       labels: Product.namesData,
       datasets: [{
-        label: 'Customer Survey Results',
+        label: '# of Votes',
         data: Product.votesData,
         backgroundColor: [
-          // 'rgba(255, 99, 132, 1)',
           'rgba(66, 133, 244 , 1)',
           'rgba(255, 206, 86, 1)',
           'rgba(75, 192, 192, 1)',
@@ -103,7 +110,8 @@ Product.prototype.makeChart = function() {
           'rgba(153, 102, 255, 1)',
           'rgba(255, 159, 64, 1)',
           'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)'
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)'
         ],
         borderColor: [
           'rgba(280, 39, 95, 1)',
@@ -126,24 +134,22 @@ Product.prototype.makeChart = function() {
       }
     }
   });
-
-
 }
+Product.resetButton.addEventListener('click', Product.prototype.refreshSurvey);
 Product.containerElement.addEventListener('click', Product.prototype.handleClick);
 
+
+//push all data into separate arrays
 Product.namesData = [];
 Product.votesData = [];
 Product.viewsData = [];
 
-//push all data into separate arrays
 Product.prototype.getChartData = function() {
   for(var i = 0; i < Product.allProducts.length; i++) {
     Product.namesData.push(Product.allProducts[i].name);
     Product.votesData.push(Product.allProducts[i].votes);
     Product.viewsData.push(Product.allProducts[i].views);
   }
-};
-
-
+}
 //Run render last
 Product.prototype.renderProducts();
