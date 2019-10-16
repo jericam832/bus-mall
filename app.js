@@ -6,7 +6,7 @@ Product.containerElement = document.getElementById('image_container');
 Product.resetButton = document.getElementById('reset');
 Product.allProducts = [];
 Product.uniquePicsArray = [];
-Product.renderCounter = 25;
+Product.renderCounter = 5;
 Product.pics = [
   document.getElementById('left'),
   document.getElementById('center'),
@@ -16,23 +16,20 @@ Product.showClicks = document.getElementById('click_counter');
 Product.ctx = document.getElementById('myChart');
 Product.ctx.style.display = 'none'; //hide chart
 //constructor function
-function Product(name) {
+function Product(name, votes) {
   this.name = name;
   this.path = `img/${name}.jpg`;
   this.views = 0;
-  this.votes = 0;
+  this.votes = votes || 0;
   Product.allProducts.push(this);
 }
 //create instances of Product constructor for each image
-for (var i = 0; i < Product.names.length; i++) {
-  new Product(Product.names[i]);
-}
 
+// console.log(Product.allProducts);
 //random number prototype
 Product.prototype.makeRandom = function() {
   return Math.floor(Math.random() * Product.allProducts.length);
 }
-
 //generate a unique array or pics so none are repeated back to back
 Product.prototype.uniquePicsArrayGenerator = function() {
   while(Product.uniquePicsArray.length < 6) {
@@ -59,22 +56,25 @@ Product.prototype.renderProducts = function() {
 //Button refreshes page
 Product.prototype.refreshSurvey = function() {
   window.location.reload();
+  // Product.renderCounter = 25;
 }
-
+// -----------------------------------------------------------------------
 Product.prototype.handleClick = function(event) {
   Product.chosenImage = event.target.title;
   // console.log('chosenImage: ', chosenImage);
   for (var i = 0; i < Product.allProducts.length; i++) {
     if (Product.allProducts[i].name === Product.chosenImage) {
+      // console.log('VOTES PLUS ONE!!!!');
       Product.allProducts[i].votes++;
       Product.renderCounter--;
     }
     Product.showClicks.innerHTML = `${Product.renderCounter} choices remaining`;
   }
-
   Product.prototype.renderProducts();
-    // console.log(Product.renderCounter);
   if (Product.renderCounter === 0) {
+    Product.productsStringified = JSON.stringify(Product.allProducts);
+    // console.log(Product.productsStringified);
+    localStorage.setItem('productData', Product.productsStringified);
     Product.h1El.innerHTML = 'Survey Results';
     Product.containerElement.removeEventListener('click', Product.prototype.handleClick);
     Product.containerElement.style.display = 'none';
@@ -82,9 +82,9 @@ Product.prototype.handleClick = function(event) {
     Product.prototype.makeChart();
   }
 }
-Product.prototype.chooseChartType = function() {
+// Product.prototype.chooseChartType = function() {
 
-}
+// }
 //make chart 
 Product.prototype.makeChart = function() {
   Product.prototype.getChartData();
@@ -143,8 +143,6 @@ Product.prototype.makeChart = function() {
 }
 Product.resetButton.addEventListener('click', Product.prototype.refreshSurvey);
 Product.containerElement.addEventListener('click', Product.prototype.handleClick);
-
-
 //push all data into separate arrays
 Product.namesData = [];
 Product.votesData = [];
@@ -157,5 +155,34 @@ Product.prototype.getChartData = function() {
     Product.viewsData.push(Product.allProducts[i].views);
   }
 }
+//----------------------- local storage -----------------------------------
+
+    // localStorage.setItem('productData', Product.productsStringified);
+    // Product.storedProducts = localStorage.getItem('productData');
+    // console.log(Product.storedProducts);
+    // Product.parsedProducts = JSON.parse(Product.storedProducts);
+    // // console.log(Product.parsedProducts);
+    // for (var i = 0; i < Product.parsedProducts.length; i++) {
+    //   new Product(Product.parsedProducts[i].name);
+    // }
+    // console.log(Product.allProducts);
+  //
+// debugger;
+//check local storage
+if('productData' in localStorage) {
+  Product.storedProducts = localStorage.getItem('productData');
+  // console.log(Product.storedProducts);
+  Product.parsedProducts = JSON.parse(Product.storedProducts);
+  // console.log(Product.parsedProducts);
+  for (var i = 0; i < Product.parsedProducts.length; i++) {
+    new Product(Product.parsedProducts[i].name, Product.parsedProducts[i].votes);
+    console.log(Product.parsedProducts[i].name, Product.parsedProducts[i].votes);
+  } 
+  // console.log(Product.allProducts);
+} else {
+    for (var i = 0; i < Product.names.length; i++) {
+      new Product(Product.names[i]);
+    }
+}
 //Run render last
-Product.prototype.renderProducts();
+// Product.prototype.renderProducts();
