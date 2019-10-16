@@ -23,14 +23,17 @@ function Product(name) {
   this.votes = 0;
   Product.allProducts.push(this);
 }
+//create instances of Product constructor for each image
 for (var i = 0; i < Product.names.length; i++) {
   new Product(Product.names[i]);
 }
 
+//random number prototype
 Product.prototype.makeRandom = function() {
   return Math.floor(Math.random() * Product.allProducts.length);
 }
 
+//generate a unique array or pics so none are repeated back to back
 Product.prototype.uniquePicsArrayGenerator = function() {
   while(Product.uniquePicsArray.length < 6) {
     var random = Product.prototype.makeRandom();
@@ -78,6 +81,9 @@ Product.prototype.handleClick = function(event) {
     //call chart function
     Product.prototype.makeChart();
   }
+}
+Product.prototype.chooseChartType = function() {
+
 }
 //make chart 
 Product.prototype.makeChart = function() {
