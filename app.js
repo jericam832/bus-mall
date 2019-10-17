@@ -6,7 +6,7 @@ Product.containerElement = document.getElementById('image_container');
 Product.resetButton = document.getElementById('reset');
 Product.allProducts = [];
 Product.uniquePicsArray = [];
-Product.renderCounter = 100;
+Product.renderCounter = 25;
 Product.pics = [
   document.getElementById('left'),
   document.getElementById('center'),
