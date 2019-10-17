@@ -6,7 +6,7 @@ Product.containerElement = document.getElementById('image_container');
 Product.resetButton = document.getElementById('reset');
 Product.allProducts = [];
 Product.uniquePicsArray = [];
-Product.renderCounter = 5;
+Product.renderCounter = 100;
 Product.pics = [
   document.getElementById('left'),
   document.getElementById('center'),
@@ -23,9 +23,6 @@ function Product(name, votes) {
   this.votes = votes || 0;
   Product.allProducts.push(this);
 }
-//create instances of Product constructor for each image
-
-// console.log(Product.allProducts);
 //random number prototype
 Product.prototype.makeRandom = function() {
   return Math.floor(Math.random() * Product.allProducts.length);
@@ -155,18 +152,6 @@ Product.prototype.getChartData = function() {
     Product.viewsData.push(Product.allProducts[i].views);
   }
 }
-//----------------------- local storage -----------------------------------
-
-    // localStorage.setItem('productData', Product.productsStringified);
-    // Product.storedProducts = localStorage.getItem('productData');
-    // console.log(Product.storedProducts);
-    // Product.parsedProducts = JSON.parse(Product.storedProducts);
-    // // console.log(Product.parsedProducts);
-    // for (var i = 0; i < Product.parsedProducts.length; i++) {
-    //   new Product(Product.parsedProducts[i].name);
-    // }
-    // console.log(Product.allProducts);
-  //
 // debugger;
 //check local storage
 if('productData' in localStorage) {
@@ -178,11 +163,11 @@ if('productData' in localStorage) {
     new Product(Product.parsedProducts[i].name, Product.parsedProducts[i].votes);
     console.log(Product.parsedProducts[i].name, Product.parsedProducts[i].votes);
   } 
+  Product.prototype.renderProducts();
   // console.log(Product.allProducts);
 } else {
     for (var i = 0; i < Product.names.length; i++) {
       new Product(Product.names[i]);
     }
+  
 }
-//Run render last
-// Product.prototype.renderProducts();
