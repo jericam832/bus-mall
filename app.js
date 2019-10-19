@@ -4,6 +4,7 @@ Product.names = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum',
 Product.h1El = document.getElementById('instructions');
 Product.containerElement = document.getElementById('image_container');
 Product.resetButton = document.getElementById('reset');
+Product.clrStorageButton = document.getElementById('clear');
 Product.allProducts = [];
 Product.uniquePicsArray = [];
 Product.renderCounter = 25;
@@ -53,7 +54,10 @@ Product.prototype.renderProducts = function() {
 //Button refreshes page
 Product.prototype.refreshSurvey = function() {
   window.location.reload();
-  // Product.renderCounter = 25;
+}
+Product.prototype.clearLocalStorage = function () {
+  localStorage.removeItem('productData');
+  Product.prototype.renderProducts();
 }
 // -----------------------------------------------------------------------
 Product.prototype.handleClick = function(event) {
@@ -139,6 +143,7 @@ Product.prototype.makeChart = function() {
   });
 }
 Product.resetButton.addEventListener('click', Product.prototype.refreshSurvey);
+Product.clrStorageButton.addEventListener('click', Product.prototype.clearLocalStorage);
 Product.containerElement.addEventListener('click', Product.prototype.handleClick);
 //push all data into separate arrays
 Product.namesData = [];
@@ -152,7 +157,7 @@ Product.prototype.getChartData = function() {
     Product.viewsData.push(Product.allProducts[i].views);
   }
 }
-// debugger;
+
 //check local storage
 if('productData' in localStorage) {
   Product.storedProducts = localStorage.getItem('productData');
@@ -169,5 +174,5 @@ if('productData' in localStorage) {
     for (var i = 0; i < Product.names.length; i++) {
       new Product(Product.names[i]);
     }
-  
+  Product.prototype.renderProducts();
 }

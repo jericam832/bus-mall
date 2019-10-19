@@ -62,15 +62,41 @@ canvas {
 #reset {
   float: left;
   padding: 10px;
-  /* margin: 5px 10px; */
-  display: block;
+  /* display: block; */
   border-radius: 4px;
   border: none;
   background-color: #de2924;
   color: white;
   text-transform: uppercase;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: 1s;
 
+}
+#reset:hover {
+  background-color: white;
+  border: 2px solid #de2924;
+  color: #de2924;
+  padding: 15px;
+  font-weight: bold;
+}
+#clear {
+  padding: 10px;
+  margin-left: 8px;
+  border-radius: 4px;
+  border: none;
+  background-color: #ffca28;
+  color: white;
+  text-transform: uppercase;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: 1s;
+
+}
+#clear:hover {
+  background-color: white;
+  border: 2px solid #ffca28;
+  color: #ffca28;
+  padding: 15px;
+  font-weight: bold;
 }
 
 main h1 {
